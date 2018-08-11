@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">TestDemo</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="slash">/</string>
+
+    <string name="position_stub">Kharkiv</string>
+    <string name="accurate_position_stub">Kharkivska oblast</string>
+    <string name="time_updated_stub">8 august 15:00</string>
+    <string name="degrees_stub">26</string>
+    <string name="max_degree_stub">28</string>
+    <string name="min_degree_stub">22</string>
+    <string name="forecast_image">Forecast image</string>
+    <string name="temperature_image">Temperature image</string>
+    <string name="humidity_stub">21%</string>
+    <string name="today">Today</string>
+    <string name="daily">Daily</string>
+    <string name="min">Min:</string>
+    <string name="max">Max:</string>
+</resources>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <TextView
+        android:id="@+id/main_screen__position"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/position_stub"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/main_screen__accurate_position"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/accurate_position_stub"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_screen__position" />
+
+    <TextView
+        android:id="@+id/main_screen_update_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/time_updated_stub"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_screen__accurate_position" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <ImageView
+        android:id="@+id/main_screen__forecast_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/forecast_image"
+        android:src="@drawable/ic_sun"
+        app:layout_constraintEnd_toStartOf="@id/main_screen__degrees"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/main_screen__degrees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/degrees_stub"
+        android:textColor="@color/black"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/main_screen__forecast_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="7dp"
+        android:layout_height="7dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_circumference"
+        app:layout_constraintStart_toEndOf="@id/main_screen__degrees"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/main_screen__forecast_image">
+
+        <TextView
+            android:id="@+id/main_screen__max_degree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/max_degree_stub"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/main_screen__slash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/slash"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/main_screen__min_degree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/min_degree_stub"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
