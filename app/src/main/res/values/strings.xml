@@ -13,7 +13,7 @@
     <string name="forecast_image">Forecast image</string>
     <string name="temperature_image">Temperature image</string>
     <string name="humidity_stub">21%</string>
-    <string name="today">Today</string>
+    <string name="each_three_hour">Per each three hour:</string>
     <string name="daily">Daily</string>
     <string name="min">Min:</string>
     <string name="max">Max:</string>

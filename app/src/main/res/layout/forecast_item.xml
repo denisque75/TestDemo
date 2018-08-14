@@ -87,10 +87,10 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-            android:id="@+id/main_screen__max_degree"
+            android:id="@+id/main_screen__min_degree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/max_degree_stub"
+            android:text="@string/min_degree_stub"
             android:textSize="18sp" />
 
         <TextView
@@ -101,10 +101,10 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/main_screen__min_degree"
+            android:id="@+id/main_screen__max_degree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/min_degree_stub"
+            android:text="@string/max_degree_stub"
             android:textSize="18sp" />
     </LinearLayout>
 

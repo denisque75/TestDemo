@@ -12,7 +12,7 @@ public class TimeUtils {
 
     public static String convertTimeFromLong(long time) {
         Date date = new Date(time);
-        Format format = new SimpleDateFormat("yyyy:MM:dd HH:mm", Locale.getDefault());
+        Format format = new SimpleDateFormat("dd HH:mm", Locale.getDefault());
         return format.format(date);
     }
 }

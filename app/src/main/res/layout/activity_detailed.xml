@@ -70,21 +70,21 @@
         app:layout_constraintTop_toBottomOf="@id/detailed__temperature_container">
 
         <TextView
-            android:id="@+id/main_screen__max_degree"
+            android:id="@+id/detailed__max_degree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/max_degree_stub"
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/main_screen__slash"
+            android:id="@+id/detailed__slash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/slash"
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/main_screen__min_degree"
+            android:id="@+id/detailed__min_degree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/min_degree_stub"
@@ -108,9 +108,9 @@
         android:id="@+id/detailed__today_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
-        android:text="@string/today"
+        android:text="@string/each_three_hour"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -125,25 +125,5 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/detailed__today_text" />
 
-    <TextView
-        android:id="@+id/detailed__daily_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/daily"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailed__temp3hours_recyclerView" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/detailed__temp_daily_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/detailed_recycler_height"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/detailed__daily_text" />
 
 </android.support.constraint.ConstraintLayout>

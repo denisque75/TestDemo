@@ -4,13 +4,7 @@ import com.arellomobile.mvp.MvpView;
 import com.denysque.testdemo.core.models.Forecast;
 
 public interface DetailedView extends MvpView {
-    String TEMP = "TEMP";
-    String MAX_TEMP = "MAX.TEMP";
-    String MIN_TEMP = "MIN.TEMP";
-    String HUMIDITY = "HUMIDITY";
-    String CITY = "CITY";
-    String MAIN_WEATHER_DESC = "MAIN.WEATHER.DESC";
-    String TIME = "TIME";
+    String CITY_ID = "city.id";
 
     void displayForecast(Forecast forecast);
 }

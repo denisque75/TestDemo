@@ -10,7 +10,7 @@ public interface DatabaseRepository {
 
     List<Forecast> getAllForecasts();
 
-    Forecast getForecastById(int id);
+    Forecast getForecastById(long id);
 
     List<Long> getAllCitiesID();
 }

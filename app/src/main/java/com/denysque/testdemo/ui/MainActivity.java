@@ -23,6 +23,7 @@ import com.denysque.testdemo.core.repository.RoomDBRepository;
 import com.denysque.testdemo.core.retrofit.WeatherAPI;
 import com.denysque.testdemo.core.retrofit.WeatherApiRetrofit;
 import com.denysque.testdemo.ui.detailed_screen.DetailedActivity;
+import com.denysque.testdemo.ui.detailed_screen.DetailedView;
 import com.denysque.testdemo.ui.recyclerView.ForecastAdapter;
 import com.denysque.testdemo.ui.search_city.SearchCityCallback;
 import com.denysque.testdemo.ui.search_city.SearchDialogFragment;
@@ -94,8 +95,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Sear
     }
 
     @Override
-    public void openDetailedView(Forecast forecast) {
+    public void openDetailedView(long cityId) {
         Intent intent = new Intent(this, DetailedActivity.class);
+        intent.putExtra(DetailedView.CITY_ID, cityId);
         startActivity(intent);
     }
 

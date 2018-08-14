@@ -73,7 +73,7 @@ public class Presenter extends MvpPresenter<MainView> {
 
     public void onItemClicked(Forecast forecast) {
         if (forecast != null) {
-            getViewState().openDetailedView(forecast);
+            getViewState().openDetailedView(forecast.getId());
         }
     }
 

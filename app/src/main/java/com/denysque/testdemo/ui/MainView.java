@@ -17,7 +17,7 @@ public interface MainView extends MvpView {
     @StateStrategyType(AddToEndSingleStrategy.class)
     void showForecasts(List<Forecast> forecastList);
 
-    void openDetailedView(Forecast forecast);
+    void openDetailedView(long cityId);
 
     void showSearchDialog();
 

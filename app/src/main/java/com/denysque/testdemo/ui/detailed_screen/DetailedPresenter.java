@@ -3,24 +3,22 @@ package com.denysque.testdemo.ui.detailed_screen;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.denysque.testdemo.core.models.Forecast;
-import com.denysque.testdemo.core.repository.CityRepository;
+import com.denysque.testdemo.core.repository.DatabaseRepository;
 
 @InjectViewState
 public class DetailedPresenter extends MvpPresenter<DetailedView> {
-    private final CityRepository repository;
+    private final DatabaseRepository repository;
+    private final long cityId;
 
-    public DetailedPresenter(CityRepository forecastRepository) {
-        this.repository = forecastRepository;
+    public DetailedPresenter(long cityId, DatabaseRepository repository) {
+        this.cityId = cityId;
+        this.repository = repository;
         display();
     }
 
     private void display() {
-        repository.loadCityForecastFromRepo(new CityRepository.LoadCityForecastCallback() {
-            @Override
-            public void loadCityForecast(Forecast forecast) {
-                getViewState().displayForecast(forecast);
-            }
-        });
+        Forecast forecast = repository.getForecastById(cityId);
+        getViewState().displayForecast(forecast);
     }
 
 

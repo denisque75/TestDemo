@@ -4,7 +4,7 @@ import com.denysque.testdemo.core.models.Forecast;
 
 public interface CityRepository {
 
-    void loadCityForecastFromRepo(LoadCityForecastCallback callback);
+    void loadCityForecastFromRepo(long cityId, LoadCityForecastCallback callback);
 
     interface LoadCityForecastCallback {
 

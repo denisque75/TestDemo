@@ -1,26 +1,33 @@
 package com.denysque.testdemo.ui.detailed_screen;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
+import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.denysque.testdemo.App;
 import com.denysque.testdemo.R;
 import com.denysque.testdemo.core.models.Forecast;
-import com.denysque.testdemo.core.repository.LoadCityRepository;
+import com.denysque.testdemo.core.models.Weather;
+import com.denysque.testdemo.core.repository.DatabaseRepository;
+import com.denysque.testdemo.core.repository.RoomDBRepository;
 import com.denysque.testdemo.ui.detailed_screen.adapter.DetailedTemperatureAdapter;
+import com.denysque.testdemo.utils.TemperatureUtils;
+import com.denysque.testdemo.utils.TimeUtils;
 
-public class DetailedActivity extends AppCompatActivity implements DetailedView {
+public class DetailedActivity extends MvpAppCompatActivity implements DetailedView {
     @InjectPresenter
     DetailedPresenter presenter;
     private DetailedTemperatureAdapter each3HourAdapter;
-    private DetailedTemperatureAdapter dailyAdapter;
 
     @ProvidePresenter
     public DetailedPresenter provideDetailedPresenter() {
-        presenter = new DetailedPresenter(new LoadCityRepository());
+        long cityId = getIntent().getLongExtra(CITY_ID, 0L);
+        DatabaseRepository dbRepository = new RoomDBRepository(((App) getApplication()).getDatabase());
+        presenter = new DetailedPresenter(cityId, dbRepository);
         return presenter;
     }
 
@@ -30,20 +37,32 @@ public class DetailedActivity extends AppCompatActivity implements DetailedView 
         setContentView(R.layout.activity_detailed);
 
         RecyclerView each3HourRecyclerView = findViewById(R.id.detailed__temp3hours_recyclerView);
-        each3HourRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        each3HourRecyclerView.setLayoutManager(layoutManager);
         each3HourAdapter = new DetailedTemperatureAdapter();
         each3HourRecyclerView.setAdapter(each3HourAdapter);
 
-        RecyclerView dialyRecyclerView = findViewById(R.id.detailed__temp_daily_recyclerView);
-        dialyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        dailyAdapter = new DetailedTemperatureAdapter();
-        dialyRecyclerView.setAdapter(dailyAdapter);
     }
 
     @Override
     public void displayForecast(Forecast forecast) {
+        TextView cityName = findViewById(R.id.detailed__position);
+        cityName.setText(forecast.getCity());
+        TextView time = findViewById(R.id.detailed__time);
+        time.setText(TimeUtils.convertTimeFromLong(forecast.getUpdatedTime()));
+
+        Weather topWeather = forecast.getWeatherList().get(0);
+        TextView mainTemp = findViewById(R.id.detailed__main_temperature);
+        mainTemp.setText(TemperatureUtils.convertToString(topWeather.getTemp()));
+        TextView minTemp = findViewById(R.id.detailed__min_degree);
+        minTemp.setText(TemperatureUtils.convertToString(topWeather.getMinTemp()));
+        TextView maxTemp = findViewById(R.id.detailed__max_degree);
+        maxTemp.setText(TemperatureUtils.convertToString(topWeather.getMaxTemp()));
+        TextView humidity = findViewById(R.id.detailed__humidity);
+        humidity.setText(TemperatureUtils.convertToHumidityString(topWeather.getHumidity()));
+
         each3HourAdapter.setItems(forecast.getWeatherList());
-        dailyAdapter.setItems(forecast.getWeatherList());
     }
 
 }

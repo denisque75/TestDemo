@@ -6,39 +6,40 @@ import com.denysque.testdemo.core.models.Forecast;
 import java.util.Calendar;
 import java.util.List;
 
-public class RoomDBRepository implements DatabaseRepository {
-    private final AppDatabase database;
+public class RoomDBRepository extends BaseDBRepository implements DatabaseRepository {
 
     public RoomDBRepository(AppDatabase database) {
-        this.database = database;
+        super(database);
     }
 
     @Override
     public void saveForecast(Forecast forecast) {
-        database.getForecastDao().insert(forecast);
-        database.getWeatherDao().insert(forecast.getWeatherList());
+        getDatabase().getForecastDao().insert(forecast);
+        getDatabase().getWeatherDao().insert(forecast.getWeatherList());
     }
 
     @Override
     public List<Forecast> getAllForecasts() {
-        List<Forecast> forecasts = database.getForecastDao().getAllForecasts();
+        List<Forecast> forecasts = getDatabase().getForecastDao().getAllForecasts();
         for (Forecast fc : forecasts) {
-            fc.setWeatherList(database.getWeatherDao().getWeather(fc.getId(), Calendar.getInstance().getTime().getTime()));
+            fc.setWeatherList(getDatabase().getWeatherDao().getWeather(fc.getId(), Calendar.getInstance().getTime().getTime()));
             if (fc.getWeatherList() == null || fc.getWeatherList().isEmpty()) {
-                fc.setWeatherList(database.getWeatherDao().getLastWeather(fc.getId()));
+                fc.setWeatherList(getDatabase().getWeatherDao().getLastWeather(fc.getId()));
             }
         }
         return forecasts;
     }
 
     @Override
-    public Forecast getForecastById(int id) {
-        return null;
+    public Forecast getForecastById(long id) {
+        Forecast forecast = getDatabase().getForecastDao().getForecastByCityId(id);
+        forecast.setWeatherList(getDatabase().getWeatherDao().getWeather(id, Calendar.getInstance().getTimeInMillis()));
+        return forecast;
     }
 
 
     @Override
     public List<Long> getAllCitiesID() {
-        return database.getForecastDao().getAllCitiesId();
+        return getDatabase().getForecastDao().getAllCitiesId();
     }
 }
