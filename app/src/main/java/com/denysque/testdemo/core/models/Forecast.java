@@ -15,7 +15,7 @@ public class Forecast {
     @Ignore
     List<Weather> weatherList;
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
     @SerializedName("city.name")
     private String city;
     @SerializedName("message")
@@ -38,11 +38,11 @@ public class Forecast {
         this.weatherList = weatherList;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

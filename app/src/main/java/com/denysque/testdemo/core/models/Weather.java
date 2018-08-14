@@ -1,17 +1,24 @@
 package com.denysque.testdemo.core.models;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 @Entity
+@ForeignKey(
+        entity = Forecast.class,
+        parentColumns = "id",
+        childColumns = "weatherId")
 public class Weather {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    @NonNull
+    private String id;
 
-    private int weatherId;
+    private long weatherId;
 
     @SerializedName("main.humidity")
     private int humidity;
@@ -26,8 +33,7 @@ public class Weather {
     public Weather() {
     }
 
-    public Weather(int id, int weatherId, int humidity, float temp, float maxTemp, float minTemp, long time, String mainWeatherDesc, String icon) {
-        this.id = id;
+    public Weather(int weatherId, int humidity, float temp, float maxTemp, float minTemp, long time, String mainWeatherDesc, String icon) {
         this.weatherId = weatherId;
         this.humidity = humidity;
         this.temp = temp;
@@ -38,19 +44,19 @@ public class Weather {
         this.icon = icon;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getWeatherId() {
+    public long getWeatherId() {
         return weatherId;
     }
 
-    public void setWeatherId(int weatherId) {
+    public void setWeatherId(long weatherId) {
         this.weatherId = weatherId;
     }
 

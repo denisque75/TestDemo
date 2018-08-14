@@ -8,8 +8,8 @@ import com.denysque.testdemo.core.models.Weather;
 import java.util.List;
 
 @Dao
-public interface WeatherDao {
+public interface WeatherDao extends BaseDao<Weather> {
 
-    @Query("SELECT * FROM Weather WHERE weatherId = :weatherId")
-    List<Weather> getWeather(int weatherId);
+    @Query("SELECT * FROM Weather WHERE weatherId = :weatherId AND time > :currentTime")
+    List<Weather> getWeather(int weatherId, long currentTime);
 }

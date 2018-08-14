@@ -14,9 +14,12 @@ import android.widget.Toast;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.denysque.testdemo.App;
 import com.denysque.testdemo.R;
 import com.denysque.testdemo.core.models.Forecast;
+import com.denysque.testdemo.core.repository.DatabaseRepository;
 import com.denysque.testdemo.core.repository.LoadForecastRepository;
+import com.denysque.testdemo.core.repository.RoomDBRepository;
 import com.denysque.testdemo.core.retrofit.WeatherAPI;
 import com.denysque.testdemo.core.retrofit.WeatherApiRetrofit;
 import com.denysque.testdemo.ui.detailed_screen.DetailedActivity;
@@ -34,7 +37,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Sear
     public Presenter provideMainPresenter() {
         WeatherApiRetrofit weatherApiRetrofit = new WeatherApiRetrofit(RetrofitCreator.createRetrofit());
         WeatherAPI weatherApi = weatherApiRetrofit.create(WeatherAPI.class);
-        mainPresenter = new Presenter(new LoadForecastRepository(weatherApi));
+        DatabaseRepository dbRepository = new RoomDBRepository(((App) getApplication()).getDatabase());
+        mainPresenter = new Presenter(new LoadForecastRepository(weatherApi), dbRepository);
         return mainPresenter;
     }
 

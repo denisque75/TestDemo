@@ -23,8 +23,15 @@ public class CustomDeserializer implements JsonDeserializer<Forecast> {
         Forecast forecast = new Forecast();
         List<Weather> weatherList = new ArrayList<>();
 
+        JsonElement cityElement = forecastJson.getAsJsonObject().get("city");
+        forecast.setCity(cityElement.getAsJsonObject().get("name").getAsString());
+        forecast.setId(cityElement.getAsJsonObject().get("id").getAsLong());
+
+        long weatherId = forecast.getId();
         for (JsonElement weatherJson : jsonWeatherList) {
             Weather weather = new Weather();
+            weather.setId(forecast.getCity() + weatherId++);
+            weather.setWeatherId(forecast.getId());
             weather.setTime(weatherJson.getAsJsonObject().get("dt").getAsLong());
 
             JsonElement mainElement = weatherJson.getAsJsonObject().get("main");

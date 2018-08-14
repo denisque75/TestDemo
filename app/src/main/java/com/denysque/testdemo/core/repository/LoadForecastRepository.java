@@ -25,9 +25,6 @@ public class LoadForecastRepository implements ForecastRepository {
             @Override
             public void onResponse(@NonNull Call<Forecast> call, @NonNull Response<Forecast> response) {
                 Forecast forecasts = response.body();
-                if (forecasts != null) {
-                    forecasts.setCity(city);
-                }
                 Log.d(TAG, "onResponse: forecast[0] = " + forecasts);
                 callback.forecastResult(forecasts);
             }

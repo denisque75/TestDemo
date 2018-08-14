@@ -8,8 +8,9 @@ import com.denysque.testdemo.core.models.Forecast;
 import java.util.List;
 
 @Dao
-public interface ForecastDao {
+public interface ForecastDao extends BaseDao<Forecast> {
 
     @Query("SELECT * FROM Forecast")
     List<Forecast> getAllForecasts();
+
 }
