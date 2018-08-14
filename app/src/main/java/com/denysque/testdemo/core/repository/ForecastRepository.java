@@ -6,15 +6,11 @@ public interface ForecastRepository {
 
     void loadForecastsFromRepo(String city, LoadForecastCallback callback);
 
-    void loadCityForecastFromRepo(LoadCityForecastCallback callback);
+    void loadForecastsFromRepo(long cityID, LoadForecastCallback callback);
 
     interface LoadForecastCallback {
 
         void forecastResult(Forecast forecasts);
     }
 
-    interface LoadCityForecastCallback {
-
-        void loadCityForecast(Forecast forecast);
-    }
 }

@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 @Entity
 @ForeignKey(
         entity = Forecast.class,
@@ -129,5 +131,20 @@ public class Weather {
                 ", mainWeatherDesc='" + mainWeatherDesc + '\'' +
                 ", icon='" + icon + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Weather weather = (Weather) o;
+        return weatherId == weather.weatherId &&
+                Objects.equals(id, weather.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, weatherId);
     }
 }

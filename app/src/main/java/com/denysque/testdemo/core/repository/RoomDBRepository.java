@@ -37,4 +37,8 @@ public class RoomDBRepository implements DatabaseRepository {
     }
 
 
+    @Override
+    public List<Long> getAllCitiesID() {
+        return database.getForecastDao().getAllCitiesId();
+    }
 }

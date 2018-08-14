@@ -106,7 +106,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Sear
 
     @Override
     public void showForecasts(List<Forecast> forecastList) {
-        adapter.addAllItems(forecastList);
+        adapter.setItems(forecastList);
     }
 
     @Override

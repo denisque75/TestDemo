@@ -38,7 +38,21 @@ public class LoadForecastRepository implements ForecastRepository {
     }
 
     @Override
-    public void loadCityForecastFromRepo(LoadCityForecastCallback callback) {
+    public void loadForecastsFromRepo(long cityId, final LoadForecastCallback callback) {
+        weatherAPI.getForecasts(cityId, WeatherAPI.UNITS, BuildConfig.API_KEY).enqueue(new Callback<Forecast>() {
+            @Override
+            public void onResponse(@NonNull Call<Forecast> call, @NonNull Response<Forecast> response) {
+                Forecast forecasts = response.body();
+                Log.d(TAG, "onResponse: forecast[0] = " + forecasts);
+                callback.forecastResult(forecasts);
+            }
 
+            @Override
+            public void onFailure(@NonNull Call<Forecast> call, @NonNull Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
+                callback.forecastResult(null);
+            }
+        });
     }
+
 }

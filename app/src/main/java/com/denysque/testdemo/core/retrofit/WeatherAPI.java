@@ -12,4 +12,7 @@ public interface WeatherAPI {
 
     @GET(FIND_CITY)
     Call<Forecast> getForecasts(@Query("q") String city, @Query("units") String units, @Query("APPID") String appId);
+
+    @GET(FIND_CITY)
+    Call<Forecast> getForecasts(@Query("id") long cityId, @Query("units") String units, @Query("APPID") String appId);
 }

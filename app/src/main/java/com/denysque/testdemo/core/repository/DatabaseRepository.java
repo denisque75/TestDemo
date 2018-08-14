@@ -11,4 +11,6 @@ public interface DatabaseRepository {
     List<Forecast> getAllForecasts();
 
     Forecast getForecastById(int id);
+
+    List<Long> getAllCitiesID();
 }

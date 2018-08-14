@@ -9,7 +9,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.denysque.testdemo.R;
 import com.denysque.testdemo.core.models.Forecast;
-import com.denysque.testdemo.core.repository.LoadForecastRepository;
+import com.denysque.testdemo.core.repository.LoadCityRepository;
 import com.denysque.testdemo.ui.detailed_screen.adapter.DetailedTemperatureAdapter;
 
 public class DetailedActivity extends AppCompatActivity implements DetailedView {
@@ -20,7 +20,7 @@ public class DetailedActivity extends AppCompatActivity implements DetailedView 
 
     @ProvidePresenter
     public DetailedPresenter provideDetailedPresenter() {
-        presenter = new DetailedPresenter(new LoadForecastRepository(null));
+        presenter = new DetailedPresenter(new LoadCityRepository());
         return presenter;
     }
 

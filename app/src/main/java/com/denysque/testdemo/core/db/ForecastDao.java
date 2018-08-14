@@ -13,4 +13,6 @@ public interface ForecastDao extends BaseDao<Forecast> {
     @Query("SELECT * FROM Forecast")
     List<Forecast> getAllForecasts();
 
+    @Query("SELECT id FROM Forecast")
+    List<Long> getAllCitiesId();
 }

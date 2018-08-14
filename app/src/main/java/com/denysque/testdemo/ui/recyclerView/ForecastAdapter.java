@@ -14,7 +14,9 @@ import com.denysque.testdemo.utils.TemperatureUtils;
 import com.denysque.testdemo.utils.TimeUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHolder> {
     private final List<Forecast> forecasts;
@@ -48,13 +50,21 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
     }
 
     public void addItem(Forecast forecast) {
-        this.forecasts.add(forecast);
-        notifyItemChanged(forecasts.size() - 1);
+        if (!this.forecasts.contains(forecast)) {
+            this.forecasts.add(forecast);
+            notifyItemChanged(forecasts.size() - 1);
+        }
     }
 
     public void addAllItems(List<Forecast> forecasts) {
-        this.forecasts.addAll(forecasts);
-        notifyDataSetChanged();
+        for (Forecast forecast : forecasts) {
+            addItem(forecast);
+        }
+    }
+
+    private void deleteNonUnique() {
+        Set<Forecast> setForecast = new HashSet<>(forecasts);
+        setItems(new ArrayList<>(setForecast));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
