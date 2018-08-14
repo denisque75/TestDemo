@@ -28,6 +28,8 @@ import com.denysque.testdemo.ui.search_city.SearchCityCallback;
 import com.denysque.testdemo.ui.search_city.SearchDialogFragment;
 import com.denysque.testdemo.utils.RetrofitCreator;
 
+import java.util.List;
+
 public class MainActivity extends MvpAppCompatActivity implements MainView, SearchCityCallback {
     @InjectPresenter
     Presenter mainPresenter;
@@ -100,6 +102,11 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Sear
     @Override
     public void showForecast(Forecast forecasts) {
         adapter.addItem(forecasts);
+    }
+
+    @Override
+    public void showForecasts(List<Forecast> forecastList) {
+        adapter.addAllItems(forecastList);
     }
 
     @Override

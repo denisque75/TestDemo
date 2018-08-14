@@ -18,8 +18,8 @@ public class Presenter extends MvpPresenter<MainView> {
     }
 
     private void display() {
-        searchForecast("Lviv");
-
+        getViewState().showForecasts(dbRepository.getAllForecasts());
+        // searchForecast("Lviv");
     }
 
     public void searchForecast(String city) {

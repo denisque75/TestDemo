@@ -52,6 +52,11 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
         notifyItemChanged(forecasts.size() - 1);
     }
 
+    public void addAllItems(List<Forecast> forecasts) {
+        this.forecasts.addAll(forecasts);
+        notifyDataSetChanged();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView positionTextView;
         private TextView updateTimeTextView;

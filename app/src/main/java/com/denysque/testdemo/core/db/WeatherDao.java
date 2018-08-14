@@ -11,5 +11,8 @@ import java.util.List;
 public interface WeatherDao extends BaseDao<Weather> {
 
     @Query("SELECT * FROM Weather WHERE weatherId = :weatherId AND time > :currentTime")
-    List<Weather> getWeather(int weatherId, long currentTime);
+    List<Weather> getWeather(long weatherId, long currentTime);
+
+    @Query("SELECT * FROM Weather WHERE (SELECT MAX(time) FROM Weather WHERE weatherId = :weatherId) = time AND weatherId = :weatherId")
+    List<Weather> getLastWeather(long weatherId);
 }
