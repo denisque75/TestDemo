@@ -2,10 +2,8 @@ package com.denysque.testdemo.ui;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.denysque.testdemo.core.pojo.Forecast;
+import com.denysque.testdemo.core.models.Forecast;
 import com.denysque.testdemo.core.repository.ForecastRepository;
-
-import java.util.List;
 
 @InjectViewState
 public class Presenter extends MvpPresenter<MainView> {
@@ -17,13 +15,31 @@ public class Presenter extends MvpPresenter<MainView> {
     }
 
     private void display() {
-        repository.loadForecastFromRepo(new ForecastRepository.LoadForecastCallback() {
+        searchForecast("Lviv");
+
+    }
+
+    public void searchForecast(String city) {
+        repository.loadForecastsFromRepo(city, new ForecastRepository.LoadForecastCallback() {
             @Override
-            public void loadForecast(List<Forecast> forecasts) {
-                getViewState().showForecast(forecasts);
+            public void forecastResult(Forecast forecasts) {
+                if (forecasts != null) {
+                    getViewState().showForecast(forecasts);
+                } else {
+                    getViewState().showMessage("Something went wrong!");
+                }
             }
         });
+    }
 
+    public void createSearchDialog() {
+        getViewState().showSearchDialog();
+    }
+
+    public void onItemClicked(Forecast forecast) {
+        if (forecast != null) {
+            getViewState().openDetailedView(forecast);
+        }
     }
 
 }

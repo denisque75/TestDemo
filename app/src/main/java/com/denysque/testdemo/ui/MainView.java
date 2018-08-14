@@ -1,11 +1,16 @@
 package com.denysque.testdemo.ui;
 
 import com.arellomobile.mvp.MvpView;
-import com.denysque.testdemo.core.pojo.Forecast;
+import com.denysque.testdemo.core.models.Forecast;
 
-import java.util.List;
 
 public interface MainView extends MvpView {
 
-    void showForecast(List<Forecast> forecasts);
+    void showForecast(Forecast forecasts);
+
+    void openDetailedView(Forecast forecast);
+
+    void showSearchDialog();
+
+    void showMessage(String message);
 }

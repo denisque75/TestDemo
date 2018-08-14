@@ -1,33 +1,40 @@
 package com.denysque.testdemo.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.denysque.testdemo.R;
-import com.denysque.testdemo.core.pojo.Forecast;
-import com.denysque.testdemo.core.repository.MainScreenRepositoryStub;
+import com.denysque.testdemo.core.models.Forecast;
+import com.denysque.testdemo.core.repository.LoadForecastRepository;
+import com.denysque.testdemo.core.retrofit.WeatherAPI;
+import com.denysque.testdemo.core.retrofit.WeatherApiRetrofit;
+import com.denysque.testdemo.ui.detailed_screen.DetailedActivity;
 import com.denysque.testdemo.ui.recyclerView.ForecastAdapter;
+import com.denysque.testdemo.ui.search_city.SearchCityCallback;
+import com.denysque.testdemo.ui.search_city.SearchDialogFragment;
+import com.denysque.testdemo.utils.RetrofitCreator;
 
-import java.util.List;
-
-public class MainActivity extends MvpAppCompatActivity implements MainView {
+public class MainActivity extends MvpAppCompatActivity implements MainView, SearchCityCallback {
     @InjectPresenter
     Presenter mainPresenter;
     private ForecastAdapter adapter;
 
     @ProvidePresenter
     public Presenter provideMainPresenter() {
-        mainPresenter = new Presenter(new MainScreenRepositoryStub());
+        WeatherApiRetrofit weatherApiRetrofit = new WeatherApiRetrofit(RetrofitCreator.createRetrofit());
+        WeatherAPI weatherApi = weatherApiRetrofit.create(WeatherAPI.class);
+        mainPresenter = new Presenter(new LoadForecastRepository(weatherApi));
         return mainPresenter;
     }
 
@@ -42,15 +49,18 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                mainPresenter.createSearchDialog();
             }
         });
 
         RecyclerView recyclerView = findViewById(R.id.main_screen__recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //OnItemClickListener<CityForecast> clickListener = new
-        adapter = new ForecastAdapter();
+        adapter = new ForecastAdapter(new OnItemClickListener<Forecast>() {
+            @Override
+            public void onClicked(Forecast data) {
+                mainPresenter.onItemClicked(data);
+            }
+        });
         recyclerView.setAdapter(adapter);
 
     }
@@ -78,7 +88,28 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     }
 
     @Override
-    public void showForecast(List<Forecast> forecasts) {
-        adapter.setItems(forecasts);
+    public void openDetailedView(Forecast forecast) {
+        Intent intent = new Intent(this, DetailedActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showForecast(Forecast forecasts) {
+        adapter.addItem(forecasts);
+    }
+
+    @Override
+    public void showSearchDialog() {
+        new SearchDialogFragment().show(getSupportFragmentManager(), "SEARCH_CITY");
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void cityWeather(String city) {
+        mainPresenter.searchForecast(city);
     }
 }

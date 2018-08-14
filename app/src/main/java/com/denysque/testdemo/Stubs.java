@@ -1,17 +1,11 @@
 package com.denysque.testdemo;
 
-import com.denysque.testdemo.core.pojo.CityForecast;
-import com.denysque.testdemo.core.pojo.Forecast;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Stubs {
 
     private Stubs() {
     }
 
-    public static List<Forecast> getForecastList() {
+    /*public static List<Forecast> getForecastList() {
         List<Forecast> forecasts = new ArrayList<>();
 
         Forecast forecast = new Forecast("Kharkiv", "Kharkivska oblast", "8 August 18:00", 25, 18, 28);
@@ -73,9 +67,9 @@ public class Stubs {
         forecasts.add(forecast);
 
         return forecasts;
-    }
+    }*/
 
-    public static List<CityForecast> getCityForecasts() {
+    /*public static List<CityForecast> getCityForecasts() {
         List<CityForecast> cityForecasts = new ArrayList<>();
 
         CityForecast cityForecast = new CityForecast(24.2f, 25.9f, 21f, 12, "Kharkiv", "Sunny", "12:00");
@@ -103,5 +97,5 @@ public class Stubs {
         cityForecasts.add(cityForecast);
 
         return cityForecasts;
-    }
+    }*/
 }

@@ -11,9 +11,19 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField("String", "API_KEY", "\"8092564df0114149cdffdd71133443c3\"")
+            buildConfigField("String", "BASE_URL", "\"http://api.openweathermap.org/\"")
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField("String", "API_KEY", "\"8092564df0114149cdffdd71133443c3\"")
+            buildConfigField("String", "BASE_URL", "\"http://api.openweathermap.org/\"")
         }
     }
 }
@@ -30,6 +40,10 @@ dependencies {
     implementation 'com.arello-mobile:moxy:1.5.5'
     annotationProcessor 'com.arello-mobile:moxy-compiler:1.5.5'
     implementation 'com.arello-mobile:moxy-app-compat:1.5.5'
+
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+    testImplementation "android.arch.persistence.room:testing:1.1.1"
 
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'

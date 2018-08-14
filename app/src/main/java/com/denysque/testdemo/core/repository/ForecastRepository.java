@@ -1,23 +1,20 @@
 package com.denysque.testdemo.core.repository;
 
-import com.denysque.testdemo.core.pojo.CityForecast;
-import com.denysque.testdemo.core.pojo.Forecast;
-
-import java.util.List;
+import com.denysque.testdemo.core.models.Forecast;
 
 public interface ForecastRepository {
 
-    void loadForecastFromRepo(LoadForecastCallback callback);
+    void loadForecastsFromRepo(String city, LoadForecastCallback callback);
 
     void loadCityForecastFromRepo(LoadCityForecastCallback callback);
 
     interface LoadForecastCallback {
 
-        void loadForecast(List<Forecast> forecasts);
+        void forecastResult(Forecast forecasts);
     }
 
     interface LoadCityForecastCallback {
 
-        void loadCityForecast(List<CityForecast> forecast);
+        void loadCityForecast(Forecast forecast);
     }
 }

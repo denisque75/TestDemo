@@ -8,14 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.denysque.testdemo.R;
-import com.denysque.testdemo.core.pojo.CityForecast;
+import com.denysque.testdemo.core.models.Weather;
 import com.denysque.testdemo.utils.TemperatureUtils;
+import com.denysque.testdemo.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DetailedTemperatureAdapter extends RecyclerView.Adapter<DetailedTemperatureAdapter.ViewHolder> {
-    private final List<CityForecast> forecasts;
+    private final List<Weather> forecasts;
 
     public DetailedTemperatureAdapter() {
         forecasts = new ArrayList<>();
@@ -37,7 +38,7 @@ public class DetailedTemperatureAdapter extends RecyclerView.Adapter<DetailedTem
         return forecasts.size();
     }
 
-    public void setItems(List<CityForecast> forecasts) {
+    public void setItems(List<Weather> forecasts) {
         this.forecasts.clear();
         this.forecasts.addAll(forecasts);
     }
@@ -56,11 +57,11 @@ public class DetailedTemperatureAdapter extends RecyclerView.Adapter<DetailedTem
             time = itemView.findViewById(R.id.temp__time);
         }
 
-        void bind(CityForecast forecast) {
-            minTemp.setText(TemperatureUtils.convertToString(forecast.getMinTemp()));
-            maxTemp.setText(TemperatureUtils.convertToString(forecast.getMaxTemp()));
-            humidity.setText(TemperatureUtils.convertToHumidityString(forecast.getHumidity()));
-            time.setText(forecast.getTime());
+        void bind(Weather weather) {
+            minTemp.setText(TemperatureUtils.convertToString(weather.getMinTemp()));
+            maxTemp.setText(TemperatureUtils.convertToString(weather.getMaxTemp()));
+            humidity.setText(TemperatureUtils.convertToHumidityString(weather.getHumidity()));
+            time.setText(TimeUtils.convertTimeFromLong(weather.getTime()));
         }
 
     }

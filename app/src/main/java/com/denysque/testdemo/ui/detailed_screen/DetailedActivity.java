@@ -8,11 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.denysque.testdemo.R;
-import com.denysque.testdemo.core.pojo.CityForecast;
-import com.denysque.testdemo.core.repository.MainScreenRepositoryStub;
+import com.denysque.testdemo.core.models.Forecast;
+import com.denysque.testdemo.core.repository.LoadForecastRepository;
 import com.denysque.testdemo.ui.detailed_screen.adapter.DetailedTemperatureAdapter;
-
-import java.util.List;
 
 public class DetailedActivity extends AppCompatActivity implements DetailedView {
     @InjectPresenter
@@ -22,7 +20,7 @@ public class DetailedActivity extends AppCompatActivity implements DetailedView 
 
     @ProvidePresenter
     public DetailedPresenter provideDetailedPresenter() {
-        presenter = new DetailedPresenter(new MainScreenRepositoryStub());
+        presenter = new DetailedPresenter(new LoadForecastRepository(null));
         return presenter;
     }
 
@@ -43,8 +41,9 @@ public class DetailedActivity extends AppCompatActivity implements DetailedView 
     }
 
     @Override
-    public void displayForecast(List<CityForecast> forecast) {
-        each3HourAdapter.setItems(forecast);
-        dailyAdapter.setItems(forecast);
+    public void displayForecast(Forecast forecast) {
+        each3HourAdapter.setItems(forecast.getWeatherList());
+        dailyAdapter.setItems(forecast.getWeatherList());
     }
+
 }
