@@ -1,4 +1,4 @@
-package com.denysque.testdemo.core.repository;
+package com.denysque.testdemo.core.repository.db;
 
 import com.denysque.testdemo.core.models.Forecast;
 
@@ -12,5 +12,7 @@ public interface DatabaseRepository {
 
     Forecast getForecastById(long id);
 
-    List<Long> getAllCitiesID();
+    List<String> getAllCities();
+
+    void deleteForecast(Forecast item);
 }

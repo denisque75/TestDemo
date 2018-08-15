@@ -6,9 +6,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -17,9 +20,10 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.denysque.testdemo.App;
 import com.denysque.testdemo.R;
 import com.denysque.testdemo.core.models.Forecast;
-import com.denysque.testdemo.core.repository.DatabaseRepository;
 import com.denysque.testdemo.core.repository.LoadForecastRepository;
-import com.denysque.testdemo.core.repository.RoomDBRepository;
+import com.denysque.testdemo.core.repository.db.DatabaseRepository;
+import com.denysque.testdemo.core.repository.db.RoomDBRepository;
+import com.denysque.testdemo.core.repository.photo.PicassoRepository;
 import com.denysque.testdemo.core.retrofit.WeatherAPI;
 import com.denysque.testdemo.core.retrofit.WeatherApiRetrofit;
 import com.denysque.testdemo.ui.detailed_screen.DetailedActivity;
@@ -35,6 +39,10 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Sear
     @InjectPresenter
     Presenter mainPresenter;
     private ForecastAdapter adapter;
+    private RecyclerView recyclerView;
+
+    private ProgressBar progressBar;
+    private ViewGroup mainContent;
 
     @ProvidePresenter
     public Presenter provideMainPresenter() {
@@ -60,16 +68,36 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Sear
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.main_screen__recycler_view);
+        recyclerView = findViewById(R.id.main_screen__recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ForecastAdapter(new OnItemClickListener<Forecast>() {
             @Override
             public void onClicked(Forecast data) {
                 mainPresenter.onItemClicked(data);
             }
-        });
+        }, new PicassoRepository());
         recyclerView.setAdapter(adapter);
 
+        progressBar = findViewById(R.id.main__progress_bar);
+        mainContent = findViewById(R.id.main__content_main);
+
+        attachItemTouchHelper();
+    }
+
+    private void attachItemTouchHelper() {
+        ItemTouchHelper.SimpleCallback itemTouchHelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                mainPresenter.deleteForecast(adapter.getItemByPosition(position), position);
+            }
+        };
+        new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(recyclerView);
     }
 
     @Override
@@ -117,6 +145,11 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Sear
     }
 
     @Override
+    public void removeItem(int position) {
+        adapter.removeItem(position);
+    }
+
+    @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
@@ -124,5 +157,15 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Sear
     @Override
     public void cityWeather(String city) {
         mainPresenter.searchForecast(city);
+    }
+
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }

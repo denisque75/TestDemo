@@ -3,7 +3,7 @@ package com.denysque.testdemo.ui.detailed_screen;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.denysque.testdemo.core.models.Forecast;
-import com.denysque.testdemo.core.repository.DatabaseRepository;
+import com.denysque.testdemo.core.repository.db.DatabaseRepository;
 
 @InjectViewState
 public class DetailedPresenter extends MvpPresenter<DetailedView> {

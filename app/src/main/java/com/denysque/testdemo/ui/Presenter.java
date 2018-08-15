@@ -3,8 +3,8 @@ package com.denysque.testdemo.ui;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.denysque.testdemo.core.models.Forecast;
-import com.denysque.testdemo.core.repository.DatabaseRepository;
 import com.denysque.testdemo.core.repository.ForecastRepository;
+import com.denysque.testdemo.core.repository.db.DatabaseRepository;
 
 import java.util.List;
 
@@ -26,9 +26,9 @@ public class Presenter extends MvpPresenter<MainView> {
 
     private void updateCities() {
         updateDefaultCities();
-        List<Long> citiesId = dbRepository.getAllCitiesID();
-        for (Long id : citiesId) {
-            searchForecast(id);
+        List<String> cities = dbRepository.getAllCities();
+        for (String city : cities) {
+            searchForecast(city);
         }
     }
 
@@ -39,6 +39,7 @@ public class Presenter extends MvpPresenter<MainView> {
     }
 
     public void searchForecast(String city) {
+        getViewState().showProgressBar();
         repository.loadForecastsFromRepo(city, new ForecastRepository.LoadForecastCallback() {
             @Override
             public void forecastResult(Forecast forecasts) {
@@ -48,24 +49,18 @@ public class Presenter extends MvpPresenter<MainView> {
                 } else {
                     getViewState().showMessage("Something went wrong!");
                 }
+                getViewState().hideProgressBar();
             }
         });
     }
 
-    public void searchForecast(long cityId) {
-        repository.loadForecastsFromRepo(cityId, new ForecastRepository.LoadForecastCallback() {
-            @Override
-            public void forecastResult(Forecast forecasts) {
-                if (forecasts != null) {
-                    dbRepository.saveForecast(forecasts);
-                    getViewState().showForecast(forecasts);
-                } else {
-                    getViewState().showMessage("Something went wrong!");
-                }
-            }
-        });
+    public void deleteForecast(Forecast forecast, int position) {
+        getViewState().showProgressBar();
+        dbRepository.deleteForecast(forecast);
+        getViewState().removeItem(position);
+        getViewState().hideProgressBar();
+        getViewState().showMessage("Deleted successfully!");
     }
-
 
     public void createSearchDialog() {
         getViewState().showSearchDialog();

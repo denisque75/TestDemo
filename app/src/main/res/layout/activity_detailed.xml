@@ -1,129 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".ui.detailed_screen.DetailedActivity">
 
-    <TextView
-        android:id="@+id/detailed__position"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:maxLines="1"
-        android:text="@string/position_stub"
-        android:textColor="@color/black"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/detailed__time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/time_updated_stub"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailed__position" />
-
-    <LinearLayout
-        android:id="@+id/detailed__temperature_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailed__time">
-
-        <ImageView
-            android:id="@+id/detailed__main_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:contentDescription="@string/temperature_image"
-            android:src="@drawable/ic_sun" />
-
-        <TextView
-            android:id="@+id/detailed__main_temperature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@string/degrees_stub"
-            android:textColor="@color/black"
-            android:textSize="60sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/detailed__min_max_temp_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailed__temperature_container">
-
-        <TextView
-            android:id="@+id/detailed__max_degree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/max_degree_stub"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/detailed__slash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/slash"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/detailed__min_degree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/min_degree_stub"
-            android:textSize="24sp" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/detailed__humidity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:drawableStart="@drawable/ic_humidity"
-        android:gravity="center"
-        android:text="@string/humidity_stub"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailed__min_max_temp_container" />
-
-    <TextView
-        android:id="@+id/detailed__today_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/each_three_hour"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailed__humidity" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/detailed__temp3hours_recyclerView"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/detailed_recycler_height"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/detailed__today_text" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/detailed__position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:maxLines="1"
+            android:text="@string/position_stub"
+            android:textColor="@color/black"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/detailed__time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/time_updated_stub"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailed__position" />
+
+        <LinearLayout
+            android:id="@+id/detailed__temperature_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailed__time">
+
+            <ImageView
+                android:id="@+id/detailed__main_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/temperature_image"
+                android:src="@drawable/ic_sun" />
+
+            <TextView
+                android:id="@+id/detailed__main_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/degrees_stub"
+                android:textColor="@color/black"
+                android:textSize="60sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detailed__min_max_temp_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailed__temperature_container">
+
+            <TextView
+                android:id="@+id/detailed__max_degree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/max_degree_stub"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/detailed__slash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/slash"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/detailed__min_degree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/min_degree_stub"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/detailed__humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/ic_humidity"
+            android:gravity="center"
+            android:text="@string/humidity_stub"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailed__min_max_temp_container" />
+
+        <TextView
+            android:id="@+id/detailed__today_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/each_three_hour"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailed__humidity" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/detailed__temp3hours_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/detailed_recycler_height"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/detailed__today_text" />
 
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

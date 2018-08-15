@@ -18,6 +18,9 @@ android {
             buildConfigField("String", "API_KEY", "\"8092564df0114149cdffdd71133443c3\"")
             buildConfigField("String", "BASE_URL", "\"http://api.openweathermap.org/\"")
             buildConfigField("String", "DATABASE_NAME", "\"weather-database\"")
+            buildConfigField("String", "PIC_URL", "\"http://openweathermap.org/img/w/\"")
+            buildConfigField("String", "PIC_EXCT", "\".png\"")
+
         }
         release {
             minifyEnabled false
@@ -26,6 +29,8 @@ android {
             buildConfigField("String", "API_KEY", "\"8092564df0114149cdffdd71133443c3\"")
             buildConfigField("String", "BASE_URL", "\"http://api.openweathermap.org/\"")
             buildConfigField("String", "DATABASE_NAME", "\"weather-database\"")
+            buildConfigField("String", "PIC_URL", "\"http://openweathermap.org/img/w/\"")
+            buildConfigField("String", "PIC_EXT", "\".png\"")
         }
     }
 }
@@ -50,4 +55,6 @@ dependencies {
 
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

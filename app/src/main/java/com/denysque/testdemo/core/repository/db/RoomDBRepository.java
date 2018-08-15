@@ -1,7 +1,8 @@
-package com.denysque.testdemo.core.repository;
+package com.denysque.testdemo.core.repository.db;
 
 import com.denysque.testdemo.core.db.AppDatabase;
 import com.denysque.testdemo.core.models.Forecast;
+import com.denysque.testdemo.core.repository.BaseDBRepository;
 
 import java.util.Calendar;
 import java.util.List;
@@ -32,14 +33,19 @@ public class RoomDBRepository extends BaseDBRepository implements DatabaseReposi
 
     @Override
     public Forecast getForecastById(long id) {
-        Forecast forecast = getDatabase().getForecastDao().getForecastByCityId(id);
-        forecast.setWeatherList(getDatabase().getWeatherDao().getWeather(id, Calendar.getInstance().getTimeInMillis()));
+        Forecast forecast = getDatabase().getForecastDao().getForecastCities(id);
+        forecast.setWeatherList(getDatabase().getWeatherDao().getWeather(id, Calendar.getInstance().getTime().getTime()));
         return forecast;
     }
 
+    @Override
+    public List<String> getAllCities() {
+        return getDatabase().getForecastDao().getAllCitiesId();
+    }
 
     @Override
-    public List<Long> getAllCitiesID() {
-        return getDatabase().getForecastDao().getAllCitiesId();
+    public void deleteForecast(Forecast item) {
+        getDatabase().getForecastDao().delete(item);
+        getDatabase().getWeatherDao().deleteWeatherByCityId(item.getId());
     }
 }

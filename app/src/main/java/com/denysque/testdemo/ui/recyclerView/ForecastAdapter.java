@@ -5,26 +5,30 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.denysque.testdemo.BuildConfig;
 import com.denysque.testdemo.R;
 import com.denysque.testdemo.core.models.Forecast;
+import com.denysque.testdemo.core.models.Weather;
+import com.denysque.testdemo.core.repository.photo.PhotoRepository;
 import com.denysque.testdemo.ui.OnItemClickListener;
 import com.denysque.testdemo.utils.TemperatureUtils;
 import com.denysque.testdemo.utils.TimeUtils;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHolder> {
     private final List<Forecast> forecasts;
     private final OnItemClickListener<Forecast> clickListener;
+    private final PhotoRepository photoRepository;
 
-    public ForecastAdapter(OnItemClickListener<Forecast> clickListener) {
+    public ForecastAdapter(OnItemClickListener<Forecast> clickListener, PhotoRepository photoRepository) {
         forecasts = new ArrayList<>();
         this.clickListener = clickListener;
+        this.photoRepository = photoRepository;
     }
 
     @NonNull
@@ -56,15 +60,13 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
         }
     }
 
-    public void addAllItems(List<Forecast> forecasts) {
-        for (Forecast forecast : forecasts) {
-            addItem(forecast);
-        }
+    public void removeItem(int position) {
+        forecasts.remove(position);
+        notifyItemRemoved(position);
     }
 
-    private void deleteNonUnique() {
-        Set<Forecast> setForecast = new HashSet<>(forecasts);
-        setItems(new ArrayList<>(setForecast));
+    public Forecast getItemByPosition(int position) {
+        return forecasts.get(position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -73,9 +75,11 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
         private TextView degreeTextView;
         private TextView minDegreeTextView;
         private TextView maxDegreeTextView;
+        private ImageView imageView;
 
         ViewHolder(View itemView) {
             super(itemView);
+            imageView = itemView.findViewById(R.id.main_screen__forecast_image);
             positionTextView = itemView.findViewById(R.id.main_screen__position);
             updateTimeTextView = itemView.findViewById(R.id.main_screen_update_time);
             degreeTextView = itemView.findViewById(R.id.main_screen__degrees);
@@ -86,10 +90,12 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
         void bind(final Forecast forecast) {
             positionTextView.setText(forecast.getCity());
             updateTimeTextView.setText(TimeUtils.convertTimeFromLong(forecast.getUpdatedTime()));
-            degreeTextView.setText(TemperatureUtils.convertToString(forecast.getWeatherList().get(0).getTemp()));
-            maxDegreeTextView.setText(TemperatureUtils.convertToString(forecast.getWeatherList().get(0).getMaxTemp()));
-            minDegreeTextView.setText(TemperatureUtils.convertToString(forecast.getWeatherList().get(0).getMinTemp()));
+            Weather topWeather = forecast.getWeatherList().get(0);
+            degreeTextView.setText(TemperatureUtils.convertToString(topWeather.getTemp()));
+            maxDegreeTextView.setText(TemperatureUtils.convertToString(topWeather.getMaxTemp()));
+            minDegreeTextView.setText(TemperatureUtils.convertToString(topWeather.getMinTemp()));
 
+            photoRepository.loadImage(BuildConfig.PIC_URL + topWeather.getIcon() + BuildConfig.PIC_EXCT, imageView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

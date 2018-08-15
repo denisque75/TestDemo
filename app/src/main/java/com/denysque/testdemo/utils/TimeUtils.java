@@ -1,6 +1,7 @@
 package com.denysque.testdemo.utils;
 
-import java.text.Format;
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -11,8 +12,9 @@ public class TimeUtils {
     }
 
     public static String convertTimeFromLong(long time) {
-        Date date = new Date(time);
-        Format format = new SimpleDateFormat("dd HH:mm", Locale.getDefault());
+        Date date = new Date(time * 1000L);
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        Log.d("TIME", "convertTimeFromLong: date long = " + time + " time =" + format.format(date));
         return format.format(date);
     }
 }

@@ -15,4 +15,7 @@ public interface WeatherDao extends BaseDao<Weather> {
 
     @Query("SELECT * FROM Weather WHERE (SELECT MAX(time) FROM Weather WHERE weatherId = :weatherId) = time AND weatherId = :weatherId")
     List<Weather> getLastWeather(long weatherId);
+
+    @Query("DELETE FROM Weather WHERE weatherId= :weatherId")
+    void deleteWeatherByCityId(long weatherId);
 }
