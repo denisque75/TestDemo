@@ -41,6 +41,7 @@ public class DetailedTemperatureAdapter extends RecyclerView.Adapter<DetailedTem
     public void setItems(List<Weather> forecasts) {
         this.forecasts.clear();
         this.forecasts.addAll(forecasts);
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

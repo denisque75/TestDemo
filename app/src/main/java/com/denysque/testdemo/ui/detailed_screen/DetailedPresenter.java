@@ -2,8 +2,7 @@ package com.denysque.testdemo.ui.detailed_screen;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.denysque.testdemo.core.models.Forecast;
-import com.denysque.testdemo.core.repository.db.DatabaseRepository;
+import com.denysque.testdemo.core.repository.db.callbacks.DatabaseRepository;
 
 @InjectViewState
 public class DetailedPresenter extends MvpPresenter<DetailedView> {
@@ -17,8 +16,7 @@ public class DetailedPresenter extends MvpPresenter<DetailedView> {
     }
 
     private void display() {
-        Forecast forecast = repository.getForecastById(cityId);
-        getViewState().displayForecast(forecast);
+        repository.getForecastById(cityId, forecast -> getViewState().displayForecast(forecast));
     }
 
 

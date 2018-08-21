@@ -33,6 +33,10 @@ android {
             buildConfigField("String", "PIC_EXT", "\".png\"")
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {

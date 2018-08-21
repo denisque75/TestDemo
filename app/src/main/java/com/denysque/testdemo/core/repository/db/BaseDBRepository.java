@@ -1,4 +1,4 @@
-package com.denysque.testdemo.core.repository;
+package com.denysque.testdemo.core.repository.db;
 
 import com.denysque.testdemo.core.db.AppDatabase;
 

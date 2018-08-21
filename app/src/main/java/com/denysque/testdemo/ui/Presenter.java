@@ -4,9 +4,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.denysque.testdemo.core.models.Forecast;
 import com.denysque.testdemo.core.repository.ForecastRepository;
-import com.denysque.testdemo.core.repository.db.DatabaseRepository;
-
-import java.util.List;
+import com.denysque.testdemo.core.repository.db.callbacks.DatabaseRepository;
 
 @InjectViewState
 public class Presenter extends MvpPresenter<MainView> {
@@ -20,16 +18,20 @@ public class Presenter extends MvpPresenter<MainView> {
     }
 
     private void display() {
-        getViewState().showForecasts(dbRepository.getAllForecasts());
-        updateCities();
+        dbRepository.getAllForecasts(forecasts -> {
+            getViewState().showForecasts(forecasts);
+            updateCities();
+        });
     }
 
     private void updateCities() {
         updateDefaultCities();
-        List<String> cities = dbRepository.getAllCities();
-        for (String city : cities) {
-            searchForecast(city);
-        }
+        dbRepository.getAllCities(cities -> {
+            for (String city : cities) {
+                searchForecast(city);
+            }
+        });
+
     }
 
     private void updateDefaultCities() {
@@ -40,17 +42,14 @@ public class Presenter extends MvpPresenter<MainView> {
 
     public void searchForecast(String city) {
         getViewState().showProgressBar();
-        repository.loadForecastsFromRepo(city, new ForecastRepository.LoadForecastCallback() {
-            @Override
-            public void forecastResult(Forecast forecasts) {
-                if (forecasts != null) {
-                    dbRepository.saveForecast(forecasts);
-                    getViewState().showForecast(forecasts);
-                } else {
-                    getViewState().showMessage("Something went wrong!");
-                }
-                getViewState().hideProgressBar();
+        repository.loadForecastsFromRepo(city, forecasts -> {
+            if (forecasts != null) {
+                dbRepository.saveForecast(forecasts);
+                getViewState().showForecast(forecasts);
+            } else {
+                getViewState().showMessage("Something went wrong!");
             }
+            getViewState().hideProgressBar();
         });
     }
 

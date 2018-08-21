@@ -18,7 +18,6 @@ public class App extends Application {
     private void setupDatabase() {
         database = Room
                 .databaseBuilder(getApplicationContext(), AppDatabase.class, BuildConfig.DATABASE_NAME)
-                .allowMainThreadQueries()
                 .build();
     }
 
